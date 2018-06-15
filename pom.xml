@@ -30,6 +30,10 @@
     <sonar.sources>src/main/java</sonar.sources>
     <sonar.tests>src/test/</sonar.tests>
     <sonar.exclusions>**/conf/**</sonar.exclusions>
+    <sonar.coverage.exclusions>
+
+
+    </sonar.coverage.exclusions>
     <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
     <sonar.jacoco.reportPath>target/jacoco.exec</sonar.jacoco.reportPath>
     <sonar.java.binaries>target/classes</sonar.java.binaries>
@@ -47,7 +51,6 @@
       <artifactId>spring-boot-devtools</artifactId>
       <scope>runtime</scope>
     </dependency>
-
 
     <dependency>
       <groupId>io.springfox</groupId>
@@ -72,6 +75,17 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.spockframework</groupId>
+      <artifactId>spock-spring</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy-all</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -86,6 +100,52 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.7.9</version>
+
+        <!--<executions>-->
+        <!--<execution>-->
+        <!--<id>jacoco-site</id>-->
+        <!--<phase>verify</phase>-->
+        <!--<goals>-->
+        <!--<goal>report</goal>-->
+        <!--</goals>-->
+        <!--</execution>-->
+        <!--<execution>-->
+        <!--<id>prepare-agent</id>-->
+        <!--<goals>-->
+        <!--<goal>prepare-agent</goal>-->
+        <!--</goals>-->
+        <!--<configuration>-->
+        <!--<propertyName>jacocoArgLine</propertyName>-->
+        <!--</configuration>-->
+        <!--</execution>-->
+        <!--<execution>-->
+        <!--<id>jacoco-check</id>-->
+        <!--<goals>-->
+        <!--<goal>check</goal>-->
+        <!--</goals>-->
+        <!--<configuration>-->
+        <!--<rules>-->
+        <!--<rule>-->
+        <!--<element>CLASS</element>-->
+        <!--<limits>-->
+        <!--<limit>-->
+        <!--<counter>BRANCH</counter>-->
+        <!--<value>COVEREDRATIO</value>-->
+        <!--<minimum>0.95</minimum>-->
+        <!--</limit>-->
+        <!--</limits>-->
+        <!--<excludes>-->
+        <!--<exclude>com.netshoes.carriers.Application</exclude>-->
+        <!--<exclude>com.netshoes.carriers.domains.*</exclude>-->
+        <!--<exclude>com.netshoes.carriers.gateways.*</exclude>-->
+        <!--<exclude>com.netshoes.carriers.exception.*</exclude>-->
+        <!--<exclude>com.netshoes.carriers.config.*</exclude>-->
+        <!--</excludes>-->
+        <!--</rule>-->
+        <!--</rules>-->
+        <!--</configuration>-->
+        <!--</execution>-->
+        <!--</executions>-->
         <executions>
           <execution>
             <goals>
@@ -136,12 +196,17 @@
         <artifactId>pitest-maven</artifactId>
         <version>${pitest-maven.version}</version>
         <configuration>
+          <mutationThreshold>75</mutationThreshold>
           <targetClasses>
             <param>com.example.sampletestingproject.*</param>
           </targetClasses>
           <targetTests>
             <param>com.example.sampletestingproject.*</param>
           </targetTests>
+          <outputFormats>
+            <outputFormat>XML</outputFormat>
+            <outputFormat>HTML</outputFormat>
+          </outputFormats>
         </configuration>
       </plugin>
     </plugins>

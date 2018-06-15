@@ -5,4 +5,5 @@ public enum CardBrand {
   VISA,
   MASTERCARD,
   AMEX
+
 }

@@ -6,6 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class GenericPayment {
-
   private Long totalValueInCents;
 }

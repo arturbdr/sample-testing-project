@@ -24,6 +24,16 @@
     <pitest-maven.version>1.4.0</pitest-maven.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <springfox-swagger2.version>2.7.0</springfox-swagger2.version>
+
+    <!-- Sonar configuration  -->
+    <sonar.sources>src/main/java</sonar.sources>
+    <sonar.tests>src/test/</sonar.tests>
+    <sonar.exclusions>**/conf/**</sonar.exclusions>
+    <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+    <sonar.jacoco.reportPath>target/jacoco.exec</sonar.jacoco.reportPath>
+    <sonar.java.binaries>target/classes</sonar.java.binaries>
+    <sonar.groovy.binaries>target/classes</sonar.groovy.binaries>
   </properties>
 
   <dependencies>
@@ -36,6 +46,19 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
       <scope>runtime</scope>
+    </dependency>
+
+
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger2</artifactId>
+      <version>${springfox-swagger2.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger-ui</artifactId>
+      <version>${springfox-swagger2.version}</version>
     </dependency>
 
     <dependency>
@@ -97,7 +120,7 @@
                     </limit>
                   </limits>
                   <excludes>
-                    <!-- Only configurations will be excluded -->
+                    <!-- Only configurations package will be excluded from validation -->
                     <exclude>com.example.sampletestingproject.config</exclude>
                   </excludes>
                 </rule>
@@ -107,7 +130,7 @@
         </executions>
       </plugin>
 
-      <!--Mutation test plugin. Execute org.pitest:pitest-maven:mutationCoverage to use it-->
+      <!-- Mutation test plugin. Execute org.pitest:pitest-maven:mutationCoverage to use it -->
       <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>

@@ -31,13 +31,13 @@
     <sonar.tests>src/test/</sonar.tests>
     <sonar.exclusions>**/conf/**</sonar.exclusions>
     <sonar.coverage.exclusions>
-
+      <!--insert here all files to not be coverage by Sonar-->
 
     </sonar.coverage.exclusions>
-    <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+    <sonar.groovy.binaries>target/classes</sonar.groovy.binaries>
     <sonar.jacoco.reportPath>target/jacoco.exec</sonar.jacoco.reportPath>
     <sonar.java.binaries>target/classes</sonar.java.binaries>
-    <sonar.groovy.binaries>target/classes</sonar.groovy.binaries>
+    <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
   </properties>
 
   <dependencies>
@@ -101,65 +101,25 @@
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.7.9</version>
 
-        <!--<executions>-->
-        <!--<execution>-->
-        <!--<id>jacoco-site</id>-->
-        <!--<phase>verify</phase>-->
-        <!--<goals>-->
-        <!--<goal>report</goal>-->
-        <!--</goals>-->
-        <!--</execution>-->
-        <!--<execution>-->
-        <!--<id>prepare-agent</id>-->
-        <!--<goals>-->
-        <!--<goal>prepare-agent</goal>-->
-        <!--</goals>-->
-        <!--<configuration>-->
-        <!--<propertyName>jacocoArgLine</propertyName>-->
-        <!--</configuration>-->
-        <!--</execution>-->
-        <!--<execution>-->
-        <!--<id>jacoco-check</id>-->
-        <!--<goals>-->
-        <!--<goal>check</goal>-->
-        <!--</goals>-->
-        <!--<configuration>-->
-        <!--<rules>-->
-        <!--<rule>-->
-        <!--<element>CLASS</element>-->
-        <!--<limits>-->
-        <!--<limit>-->
-        <!--<counter>BRANCH</counter>-->
-        <!--<value>COVEREDRATIO</value>-->
-        <!--<minimum>0.95</minimum>-->
-        <!--</limit>-->
-        <!--</limits>-->
-        <!--<excludes>-->
-        <!--<exclude>com.netshoes.carriers.Application</exclude>-->
-        <!--<exclude>com.netshoes.carriers.domains.*</exclude>-->
-        <!--<exclude>com.netshoes.carriers.gateways.*</exclude>-->
-        <!--<exclude>com.netshoes.carriers.exception.*</exclude>-->
-        <!--<exclude>com.netshoes.carriers.config.*</exclude>-->
-        <!--</excludes>-->
-        <!--</rule>-->
-        <!--</rules>-->
-        <!--</configuration>-->
-        <!--</execution>-->
-        <!--</executions>-->
         <executions>
           <execution>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>report</id>
-            <phase>prepare-package</phase>
+            <id>jacoco-site</id>
+            <phase>verify</phase>
             <goals>
               <goal>report</goal>
             </goals>
           </execution>
           <execution>
+            <id>prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+            <configuration>
+              <propertyName>jacocoArgLine</propertyName>
+            </configuration>
+          </execution>
+          <execution>
+            <id>jacoco-check</id>
             <goals>
               <goal>check</goal>
             </goals>
@@ -180,8 +140,8 @@
                     </limit>
                   </limits>
                   <excludes>
-                    <!-- Only configurations package will be excluded from validation -->
-                    <exclude>com.example.sampletestingproject.config</exclude>
+                    <exclude>com.example.sampletestingproject.SampleTestingProjectApplication
+                    </exclude>
                   </excludes>
                 </rule>
               </rules>

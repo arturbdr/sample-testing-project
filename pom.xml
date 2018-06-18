@@ -20,7 +20,10 @@
   </parent>
 
   <properties>
+    <fixture-factory.version>3.1.0</fixture-factory.version>
+    <gmavenplus-plugin.version>1.6</gmavenplus-plugin.version>
     <java.version>1.8</java.version>
+    <pitest-maven.mutationThreshold>75</pitest-maven.mutationThreshold>
     <pitest-maven.version>1.4.0</pitest-maven.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -34,10 +37,11 @@
       <!--insert here all files to not be coverage by Sonar-->
 
     </sonar.coverage.exclusions>
-    <sonar.groovy.binaries>target/classes</sonar.groovy.binaries>
+    <sonar.groovy.binaries>target/classes,target/test-classes</sonar.groovy.binaries>
     <sonar.jacoco.reportPath>target/jacoco.exec</sonar.jacoco.reportPath>
     <sonar.java.binaries>target/classes</sonar.java.binaries>
     <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+
   </properties>
 
   <dependencies>
@@ -91,10 +95,31 @@
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-all</artifactId>
     </dependency>
+
+
+    <dependency>
+      <groupId>br.com.six2six</groupId>
+      <artifactId>fixture-factory</artifactId>
+      <version>${fixture-factory.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
     <plugins>
+
+      <plugin>
+        <groupId>org.codehaus.gmavenplus</groupId>
+        <artifactId>gmavenplus-plugin</artifactId>
+        <version>${gmavenplus-plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>compileTests</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
       <plugin>
         <groupId>org.springframework.boot</groupId>
@@ -108,20 +133,16 @@
 
         <executions>
           <execution>
-            <id>jacoco-site</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>prepare-agent</id>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
-            <configuration>
-              <propertyName>jacocoArgLine</propertyName>
-            </configuration>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
           </execution>
           <execution>
             <id>jacoco-check</id>
@@ -145,8 +166,13 @@
                     </limit>
                   </limits>
                   <excludes>
-                    <exclude>com.example.sampletestingproject.SampleTestingProjectApplication
-                    </exclude>
+                    <!--Remove module Startup class-->
+                    <exclude>com.example.sampletestingproject.SampleTestingProjectApplication</exclude>
+
+                    <!--Remove config classes-->
+                    <exclude>com.example.sampletestingproject.config</exclude>
+
+                    <exclude>com.example.sampletestingproject.*</exclude>
                   </excludes>
                 </rule>
               </rules>
@@ -155,23 +181,31 @@
         </executions>
       </plugin>
 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <useFile>true</useFile>
+          <includes>
+            <include>**/*Test.java</include>
+            <include>**/*Spec.java</include>
+          </includes>
+        </configuration>
+      </plugin>
+
       <!-- Mutation test plugin. Execute org.pitest:pitest-maven:mutationCoverage to use it -->
       <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
         <version>${pitest-maven.version}</version>
         <configuration>
-          <mutationThreshold>75</mutationThreshold>
+          <mutationThreshold>${pitest-maven.mutationThreshold}</mutationThreshold>
           <targetClasses>
             <param>com.example.sampletestingproject.*</param>
           </targetClasses>
           <targetTests>
             <param>com.example.sampletestingproject.*</param>
           </targetTests>
-          <outputFormats>
-            <outputFormat>XML</outputFormat>
-            <outputFormat>HTML</outputFormat>
-          </outputFormats>
         </configuration>
       </plugin>
     </plugins>

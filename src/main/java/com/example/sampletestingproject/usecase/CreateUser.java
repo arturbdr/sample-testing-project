@@ -11,9 +11,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class CreateUser {
 
+  private final UserGateway userGateway;
+
   @Autowired
-  @Qualifier("mockUserGatewayImpl")
-  private UserGateway userGateway;
+  public CreateUser(@Qualifier("mockUserGatewayImpl") UserGateway userGateway) {
+    this.userGateway = userGateway;
+  }
 
   public User createUser(final User userToBeCreated) {
     log.info("Creating user {}", userToBeCreated);

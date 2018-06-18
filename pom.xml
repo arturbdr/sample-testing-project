@@ -22,6 +22,7 @@
   <properties>
     <fixture-factory.version>3.1.0</fixture-factory.version>
     <gmavenplus-plugin.version>1.6</gmavenplus-plugin.version>
+    <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
     <java.version>1.8</java.version>
     <pitest-maven.mutationThreshold>75</pitest-maven.mutationThreshold>
     <pitest-maven.version>1.4.0</pitest-maven.version>
@@ -32,7 +33,10 @@
     <!-- Sonar configuration  -->
     <sonar.sources>src/main/java</sonar.sources>
     <sonar.tests>src/test/</sonar.tests>
-    <sonar.exclusions>**/conf/**</sonar.exclusions>
+    <sonar.exclusions>
+      **/conf/**
+      com.example.sampletestingproject.SampleTestingProjectApplication
+    </sonar.exclusions>
     <sonar.coverage.exclusions>
       <!--insert here all files to not be coverage by Sonar-->
 
@@ -96,7 +100,6 @@
       <artifactId>groovy-all</artifactId>
     </dependency>
 
-
     <dependency>
       <groupId>br.com.six2six</groupId>
       <artifactId>fixture-factory</artifactId>
@@ -129,7 +132,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.7.9</version>
+        <version>${jacoco-maven-plugin.version}</version>
 
         <executions>
           <execution>
@@ -167,7 +170,8 @@
                   </limits>
                   <excludes>
                     <!--Remove module Startup class-->
-                    <exclude>com.example.sampletestingproject.SampleTestingProjectApplication</exclude>
+                    <exclude>com.example.sampletestingproject.SampleTestingProjectApplication
+                    </exclude>
 
                     <!--Remove config classes-->
                     <exclude>com.example.sampletestingproject.config</exclude>
@@ -190,6 +194,9 @@
             <include>**/*Test.java</include>
             <include>**/*Spec.java</include>
           </includes>
+          <excludes>
+            <exclude>**/Abstract*.java</exclude>
+          </excludes>
         </configuration>
       </plugin>
 

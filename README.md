@@ -22,7 +22,7 @@ This application should follow the rules:
 ## What should I do if I have a doubt and is not clear here?
 - Ask :) Let's discuss and then improve this documentation together.
 
-##### Gateway Controller responsibilities:
+#### Gateway Controller responsibilities:
 1. Must define the correct rest verb:<br/>
   GET --> Retrieving elements.<br/>
   PUT --> Updating an existing element<br/>
@@ -30,23 +30,26 @@ This application should follow the rules:
   POST --> Can also be used to retrieve data with a @RequestBody (sometimes a complex consuting may need to pass a Body. Since Get doesn't accept body, use Post for convention)<br/>
   PATCH --> To partially update of an Element<br/>
   DELETE --> To remove one element<br/>
-2. Must perform Bean Validation of the incoming Payload
-3. Must Convert the incoming payload for a Domain object and pass the domain object to the usecase for processing
-4. Must document with Swagger all the service (input, output and possible error codes)
-5. Must NOT have access to other gateways.
+2. Must perform Bean Validation of the incoming Payload (JSon/DataContract object)
+3. After validate the incoming payload, **Must** Convert the incoming payload for a Domain object and pass the domain object to the usecase for processing
+4. Must document with Swagger all the services (input, output and possible error codes)
+5. Must **NOT** have access to other gateways.
 6. Must be unit tested using JUnit, Mockito and MockMVC
 7. Depending of the exposed service, it may need to configure security
-8. May log (beware for sensitive data) the incoming payload
+8. May log (**beware for sensitive data**) the incoming payload
 9. Must always convert the Domain object returned from the usecase execution to a new object (json/data contract)
-10. Always return one ResponseEntity wrapping the response object (json/data contract)
-11. Must define the consumed and produced data accepted (produces/consumes)
+10. Always return one ResponseEntity wrapping the response object (json/data contract) along with the correct status code (200, 201, 404, 500 etc)
+11. Must define the consumed and produced data accepted (produces/consumes annotations)
+12. Depending on the data volume, work with pagination
 
-##### usecase responsibilities:
+#### Usecase responsibilities:
 1. May log (beware for sensitive data) the incoming payload
 2. Must perform business rules and validations
 3. May use another usecase(s) (through constructor injection)
 4. May use 1 or more Gateways (through constructor injection using ALWAYS an interface and never the concrete implementation)
 5. Must be EXTENSIVELY tested with Spock testing framework
+6. Must be responsible for a single operation (for example: CreateUser, PayOrder, ReturnOrder)
+7. Must have only ONE public method
 
 ##### Other hints 
-1. Always check the existence of a Controller Advice to handle possible exceptions thrown from the usecase
+1. Always check the existence of a Controller Advice to handle possible exceptions thrown from the usecase or other parts of the code (our client should not receive unpredicted exceptions)

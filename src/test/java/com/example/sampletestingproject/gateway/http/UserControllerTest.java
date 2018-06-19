@@ -2,6 +2,8 @@ package com.example.sampletestingproject.gateway.http;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -26,18 +28,17 @@ import org.springframework.test.web.servlet.MvcResult;
 @RunWith(MockitoJUnitRunner.class)
 public class UserControllerTest {
 
+  @Mock
+  private CreateUserJsonToUser createUserJsonToUser;
 
   @Mock
-  CreateUserJsonToUser createUserJsonToUser;
+  private UserToCreatedUserJson userToCreatedUserJson;
 
   @Mock
-  UserToCreatedUserJson userToCreatedUserJson;
-
-  @Mock
-  CreateUser createUser;
+  private CreateUser createUser;
 
   @InjectMocks
-  UserController userController;
+  private UserController userController;
 
   private MockMvc mockMvc;
   private ObjectMapper objectMapper;
@@ -50,6 +51,7 @@ public class UserControllerTest {
 
   @Test
   public void shouldCreateNewUser() throws Exception {
+    // GIVEN a user to be created
     User userToBeCreated = User.builder().age(35).name("John").build();
     User createdUser = User.builder().age(35).name("John").id(UUID.randomUUID().toString()).build();
 
@@ -57,14 +59,19 @@ public class UserControllerTest {
     when(userToCreatedUserJson.convert(any())).thenCallRealMethod();
     when(createUser.createUser(any())).thenReturn(createdUser);
 
+    // WHEN I try to consume the endpoint to create a new user
     MvcResult mvcResult = mockMvc.perform(post("/api/user")
         .content(objectMapper.writeValueAsString(userToBeCreated))
         .contentType(APPLICATION_JSON_UTF8))
         .andExpect(status().isCreated())
         .andReturn();
 
+    // THEN It should create a new user with the generated id
     String responseBodyAsString = mvcResult.getResponse().getContentAsString();
     User userFromResponse = objectMapper.readValue(responseBodyAsString, User.class);
     assertEquals(userFromResponse, createdUser);
+    verify(createUser, times(1)).createUser(any());
+    verify(createUserJsonToUser, times(1)).convert(any());
+    verify(userToCreatedUserJson, times(1)).convert(any());
   }
 }

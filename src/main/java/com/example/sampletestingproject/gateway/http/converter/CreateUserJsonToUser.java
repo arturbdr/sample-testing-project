@@ -17,7 +17,6 @@ public class CreateUserJsonToUser implements Converter<CreateUserJson, User> {
     if (source != null) {
       builder.age(source.getAge())
           .name(source.getName());
-
     }
     return builder.build();
   }

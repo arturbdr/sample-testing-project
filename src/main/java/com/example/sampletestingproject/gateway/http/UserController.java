@@ -36,7 +36,7 @@ public class UserController {
 
   @ApiOperation(value = "Create a new User")
   @ApiResponses(value = {
-      @ApiResponse(code = 201, message = "User Created along with identification"),
+      @ApiResponse(code = 201, message = "User Created along with identification generated"),
       @ApiResponse(code = 400, message = "Bad request")
   })
   @PostMapping(value = CREATE_NEW_USER, produces = APPLICATION_JSON_UTF8_VALUE, consumes = APPLICATION_JSON_UTF8_VALUE)

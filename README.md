@@ -53,3 +53,4 @@ This application should follow the rules:
 
 ##### Other hints 
 1. Always check the existence of a Controller Advice to handle possible exceptions thrown from the usecase or other parts of the code (our client should not receive unpredicted exceptions)
+2. Always check the spring boot doc at: https://docs.spring.io/spring-boot/docs/1.5.8.RELEASE/reference//htmlsingle/#boot-features-testing

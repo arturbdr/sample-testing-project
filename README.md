@@ -51,6 +51,9 @@ This application should follow the rules:
 6. Must be responsible for a single operation (for example: CreateUser, PayOrder, ReturnOrder)
 7. Must have only ONE public method
 
-##### Other hints 
-1. Always check the existence of a Controller Advice to handle possible exceptions thrown from the usecase or other parts of the code (our client should not receive unpredicted exceptions)
-2. Always check the spring boot doc at: https://docs.spring.io/spring-boot/docs/1.5.8.RELEASE/reference//htmlsingle/#boot-features-testing
+##### Other hints and site references
+1. Always check the existence of a Controller Advice to handle possible exceptions thrown from the usecase or other layers of the code (the client should not never receive unpredicted exceptions)
+2. Always check the spring boot doc at: [Spring Boot 1.5.8 reference guide](https://docs.spring.io/spring-boot/docs/1.5.8.RELEASE/reference//htmlsingle)
+3. In case of legacy code, check this website with good refactoring strategies and practice exercises: [Refactoring](https://sourcemaking.com/refactoring)
+4. Reference site of "Uncle Bob - Robert Martin": [Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
+5. Testing Strategies in microservices: [Testing Strategies](https://martinfowler.com/articles/microservice-testing/) 

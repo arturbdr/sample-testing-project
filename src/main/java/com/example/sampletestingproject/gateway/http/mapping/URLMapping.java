@@ -1,6 +1,9 @@
 package com.example.sampletestingproject.gateway.http.mapping;
 
-public interface URLMapping {
+public final class URLMapping {
 
-  String CREATE_NEW_USER = "/api/user";
+  public static final String CREATE_NEW_USER = "/api/user";
+
+  private URLMapping() {
+  }
 }

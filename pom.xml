@@ -21,6 +21,7 @@
 
   <properties>
     <fixture-factory.version>3.1.0</fixture-factory.version>
+    <fongo.version>2.1.0</fongo.version>
     <gmavenplus-plugin.version>1.6</gmavenplus-plugin.version>
     <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
     <java.version>1.8</java.version>
@@ -28,23 +29,28 @@
     <pitest-maven.version>1.4.0</pitest-maven.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <spotbugs-annotations.version>3.1.3</spotbugs-annotations.version>
     <springfox-swagger2.version>2.7.0</springfox-swagger2.version>
 
     <!-- Sonar configuration  -->
-    <sonar.sources>src/main/java</sonar.sources>
-    <sonar.tests>src/test/</sonar.tests>
-    <sonar.exclusions>
-      **/conf/**
-      com.example.sampletestingproject.SampleTestingProjectApplication
-    </sonar.exclusions>
     <sonar.coverage.exclusions>
-      <!--insert here all files to not be coverage by Sonar-->
-
+      <!--insert here all files to not be coverage by SonarQube-->
+      <!--JaCoCo should be configured down below-->
+      **/example/sampletestingproject/config/**,
+      **/example/sampletestingproject/gateway/http/mapping/**,
+      **/example/sampletestingproject/SampleTestingProjectApplication.java,
+      **/example/sampletestingproject/domain/**,
+      **/example/sampletestingproject/gateway/http/json/**
     </sonar.coverage.exclusions>
+    <sonar.exclusions>
+      **/example/sampletestingproject/SampleTestingProjectApplication.java
+    </sonar.exclusions>
     <sonar.groovy.binaries>target/classes,target/test-classes</sonar.groovy.binaries>
     <sonar.jacoco.reportPath>target/jacoco.exec</sonar.jacoco.reportPath>
     <sonar.java.binaries>target/classes</sonar.java.binaries>
     <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+    <sonar.sources>src/main/java</sonar.sources>
+    <sonar.tests>src/test/groovy,src/test/java</sonar.tests>
 
   </properties>
 
@@ -77,6 +83,13 @@
       <version>${springfox-swagger2.version}</version>
     </dependency>
 
+    <!-- MongoDB in memory for integration tests-->
+    <dependency>
+      <groupId>de.flapdoodle.embed</groupId>
+      <artifactId>de.flapdoodle.embed.mongo</artifactId>
+      <scope>test</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -95,15 +108,26 @@
       <scope>test</scope>
     </dependency>
 
+    <!--Required dependency to execute spock tests-->
+    <!--The scope can NOT be test. It must be compile!-->
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-all</artifactId>
     </dependency>
 
+    <!--Required dependency to use templates for testing-->
     <dependency>
       <groupId>br.com.six2six</groupId>
       <artifactId>fixture-factory</artifactId>
       <version>${fixture-factory.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.spotbugs</groupId>
+      <artifactId>spotbugs-annotations</artifactId>
+      <version>${spotbugs-annotations.version}</version>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 
@@ -173,10 +197,16 @@
                     <exclude>com.example.sampletestingproject.SampleTestingProjectApplication
                     </exclude>
 
-                    <!--Remove config classes-->
-                    <exclude>com.example.sampletestingproject.config</exclude>
+                    <!--Remove module URLMapping class-->
+                    <exclude>com.example.sampletestingproject.gateway.http.mapping.URLMapping
+                    </exclude>
 
-                    <exclude>com.example.sampletestingproject.*</exclude>
+                    <!--Remove, in this order, config, domain and json classes-->
+                    <exclude>com.example.sampletestingproject.config.*</exclude>
+                    <exclude>com.example.sampletestingproject.domain.*</exclude>
+                    <exclude>com.example.sampletestingproject.gateway.http.json.*</exclude>
+
+                    <!--<exclude>com.example.sampletestingproject.*</exclude>-->
                   </excludes>
                 </rule>
               </rules>
@@ -206,7 +236,7 @@
         <artifactId>pitest-maven</artifactId>
         <version>${pitest-maven.version}</version>
         <configuration>
-          <mutationThreshold>${pitest-maven.mutationThreshold}</mutationThreshold>
+          <!--<mutationThreshold>${pitest-maven.mutationThreshold}</mutationThreshold>-->
           <targetClasses>
             <param>com.example.sampletestingproject.*</param>
           </targetClasses>

@@ -6,11 +6,11 @@ import com.example.sampletestingproject.gateway.mongodb.repository.UserRepositor
 import org.springframework.stereotype.Component;
 
 @Component
-public class MongoUserGatewayImpl implements UserGateway {
+public class UserGatewayMongoImpl implements UserGateway {
 
   private final UserRepository userRepository;
 
-  public MongoUserGatewayImpl(UserRepository userRepository) {
+  public UserGatewayMongoImpl(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
 

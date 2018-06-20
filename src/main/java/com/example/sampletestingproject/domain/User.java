@@ -1,5 +1,6 @@
 package com.example.sampletestingproject.domain;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @Data
 @Document(collection = "users")
+@SuppressFBWarnings
 public class User {
 
   @Id

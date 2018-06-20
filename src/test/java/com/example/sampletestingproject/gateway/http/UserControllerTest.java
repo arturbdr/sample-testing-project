@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 import com.example.sampletestingproject.domain.User;
 import com.example.sampletestingproject.gateway.http.converter.CreateUserJsonToUser;
 import com.example.sampletestingproject.gateway.http.converter.UserToCreatedUserJson;
+import com.example.sampletestingproject.gateway.http.mapping.URLMapping;
 import com.example.sampletestingproject.usecase.CreateUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.UUID;
@@ -60,18 +61,26 @@ public class UserControllerTest {
     when(createUser.createUser(any())).thenReturn(createdUser);
 
     // WHEN I try to consume the endpoint to create a new user
-    MvcResult mvcResult = mockMvc.perform(post("/api/user")
+    MvcResult mvcResult = mockMvc.perform(post(URLMapping.CREATE_NEW_USER)
         .content(objectMapper.writeValueAsString(userToBeCreated))
         .contentType(APPLICATION_JSON_UTF8))
         .andExpect(status().isCreated())
         .andReturn();
 
-    // THEN It should create a new user with the generated id
+    // THEN It should create a new user along with the generated id
     String responseBodyAsString = mvcResult.getResponse().getContentAsString();
     User userFromResponse = objectMapper.readValue(responseBodyAsString, User.class);
     assertEquals(userFromResponse, createdUser);
     verify(createUser, times(1)).createUser(any());
     verify(createUserJsonToUser, times(1)).convert(any());
     verify(userToCreatedUserJson, times(1)).convert(any());
+  }
+
+  @Test
+  public void shouldValidateIfURLChanged() {
+    // If the URL changes it could break clients. This test will inform that in case of URL changes
+    String expected = "/api/user";
+    String actual = URLMapping.CREATE_NEW_USER;
+    assertEquals(expected, actual);
   }
 }

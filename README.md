@@ -13,11 +13,18 @@
 - Checking all together submitting the application locally to SonarQube
 - Handling Exceptions
 
-### Rules to be applied for this application
+### Rules to be applied for this application - Exercises
 This application should follow the rules: 
 1. A User must have more than 30 years
-2. The username size must be at least 2 and start with letter Z.
-3. Given a valid user, it should be stored for latter use
+2. A user cant be created without a name, age and CPF
+3. The username size must be at least 2 and start with letter Z.
+4. Given a valid user, it should be stored for latter use
+
+
+### Rules to be applied for this application - more Exercises
+1. There should be a way to update a user
+2. There can be more than one user with same CPF
+3. When updating an user, the same rules of creations applies.
 
 ## What should I do if I have a doubt and is not clear here?
 - Ask :) Let's discuss and then improve this documentation together.
@@ -30,7 +37,7 @@ This application should follow the rules:
   POST --> Can also be used to retrieve data with a @RequestBody (sometimes a complex consuting may need to pass a Body. Since Get doesn't accept body, use Post for convention)<br/>
   PATCH --> To partially update of an Element<br/>
   DELETE --> To remove one element<br/>
-2. Must perform Bean Validation of the incoming Payload (JSon/DataContract object)
+2. Must perform Bean Validation of the incoming Payload (Json/DataContract object)
 3. After validate the incoming payload, **Must** Convert the incoming payload for a Domain object and pass the domain object to the usecase for processing
 4. Must document with Swagger all the services (input, output and possible error codes)
 5. Must **NOT** have access to other gateways.

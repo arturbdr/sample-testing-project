@@ -14,6 +14,7 @@ public class UserToCreatedUserJson implements Converter<User, CreatedUserJson> {
         .id(source.getId())
         .name(source.getName())
         .age(source.getAge())
+        .cpf(source.getCpf())
         .build();
   }
 }

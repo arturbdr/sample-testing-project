@@ -13,6 +13,7 @@ public class CreateUserJsonToUser implements Converter<CreateUserJson, User> {
   public User convert(final CreateUserJson source) {
     return User.builder()
         .age(source.getAge())
+        .cpf(source.getCpf())
         .name(source.getName())
         .build();
   }

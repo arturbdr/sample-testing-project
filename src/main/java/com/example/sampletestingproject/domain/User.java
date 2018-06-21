@@ -18,6 +18,7 @@ public class User {
 
   @Id
   private String id;
+  private String cpf;
   private String name;
   private Integer age;
 

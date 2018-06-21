@@ -21,10 +21,12 @@ public class UserToCreatedUserJsonTest {
     User userToConvert = User.builder()
         .age(10)
         .name("Sample Name")
+        .cpf("12112112155")
         .build();
 
     CreatedUserJson convertedUser = userToCreatedUserJson.convert(userToConvert);
     assertEquals(userToConvert.getAge(), convertedUser.getAge());
     assertEquals(userToConvert.getName(), convertedUser.getName());
+    assertEquals(userToConvert.getCpf(), convertedUser.getCpf());
   }
 }

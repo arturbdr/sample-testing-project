@@ -71,6 +71,7 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!--Swagger dependencies -->
     <dependency>
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger2</artifactId>
@@ -102,6 +103,7 @@
       <scope>test</scope>
     </dependency>
 
+    <!--Required dependency for Spock tests-->
     <dependency>
       <groupId>org.spockframework</groupId>
       <artifactId>spock-spring</artifactId>
@@ -123,6 +125,8 @@
       <scope>test</scope>
     </dependency>
 
+    <!--Dependency used to ignore findbugs on Lombok annotations-->
+    <!--Check the class User.java for the annotation SuppressFBWarnings-->
     <dependency>
       <groupId>com.github.spotbugs</groupId>
       <artifactId>spotbugs-annotations</artifactId>
@@ -205,8 +209,6 @@
                     <exclude>com.example.sampletestingproject.config.*</exclude>
                     <exclude>com.example.sampletestingproject.domain.*</exclude>
                     <exclude>com.example.sampletestingproject.gateway.http.json.*</exclude>
-
-                    <!--<exclude>com.example.sampletestingproject.*</exclude>-->
                   </excludes>
                 </rule>
               </rules>

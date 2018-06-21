@@ -53,7 +53,7 @@ public class UserControllerTest {
   @Test
   public void shouldCreateNewUser() throws Exception {
     // GIVEN a user to be created
-    User userToBeCreated = User.builder().age(35).name("John").build();
+    User userToBeCreated = User.builder().age(35).name("John").cpf("99999999999").build();
     User createdUser = User.builder().age(35).name("John").id(UUID.randomUUID().toString()).build();
 
     when(createUserJsonToUser.convert(any())).thenCallRealMethod();
@@ -74,6 +74,23 @@ public class UserControllerTest {
     verify(createUser, times(1)).createUser(any());
     verify(createUserJsonToUser, times(1)).convert(any());
     verify(userToCreatedUserJson, times(1)).convert(any());
+  }
+
+  @Test
+  public void shouldReturnBadRequestDueToMissingParameters() throws Exception {
+    // GIVEN a user to be created
+    User userToBeCreated = User.builder().age(35).cpf("99999999999").build();
+
+    // WHEN I try to consume the endpoint to create a new user
+    mockMvc.perform(post(URLMapping.CREATE_NEW_USER)
+        .content(objectMapper.writeValueAsString(userToBeCreated))
+        .contentType(APPLICATION_JSON_UTF8))
+        .andExpect(status().isBadRequest())
+        .andReturn();
+
+    verify(createUser, times(0)).createUser(any());
+    verify(createUserJsonToUser, times(0)).convert(any());
+    verify(userToCreatedUserJson, times(0)).convert(any());
   }
 
   @Test

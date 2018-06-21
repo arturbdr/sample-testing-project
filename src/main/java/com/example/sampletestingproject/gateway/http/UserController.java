@@ -12,6 +12,8 @@ import com.example.sampletestingproject.usecase.CreateUser;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javax.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Slf4j
 public class UserController {
 
   private final CreateUserJsonToUser createUserJsonToUser;
@@ -41,9 +44,10 @@ public class UserController {
   })
   @PostMapping(value = CREATE_NEW_USER, produces = APPLICATION_JSON_UTF8_VALUE, consumes = APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<CreatedUserJson> createUser(
-      @RequestBody final CreateUserJson createUserJson) {
-
+      @RequestBody @Valid final CreateUserJson createUserJson) {
+    log.info("Creating user {}", createUserJson);
     final User userToBeCreated = createUserJsonToUser.convert(createUserJson);
+
     final User userCreated = createUser.createUser(userToBeCreated);
 
     return ResponseEntity

@@ -164,19 +164,21 @@
 
         <executions>
           <execution>
+            <phase>initialize</phase>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
           </execution>
           <execution>
             <id>report</id>
-            <phase>prepare-package</phase>
+            <phase>test</phase>
             <goals>
               <goal>report</goal>
             </goals>
           </execution>
           <execution>
             <id>jacoco-check</id>
+            <phase>test</phase>
             <goals>
               <goal>check</goal>
             </goals>

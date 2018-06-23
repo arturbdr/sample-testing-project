@@ -1,5 +1,9 @@
 # Sample Testing Application
 
+[![Build Status](https://travis-ci.org/arturbdr/sample-testing-project.svg?branch=master)](https://travis-ci.org/arturbdr/sample-testing-project)
+[![codecov](https://codecov.io/gh/arturbdr/sample-testing-project/branch/master/graph/badge.svg)](https://codecov.io/gh/arturbdr/sample-testing-project)
+
+
 #### The purpose of this application is to show how to develop one application with:
 
 - Clean Architecture

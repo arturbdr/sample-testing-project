@@ -1,7 +1,6 @@
 ignore:
-  - "com/example/sampletestingproject/config/**"  # ignore folders and all its contents
-  - "com/example/sampletestingproject/config/**"
-  - "com/example/sampletestingproject/gateway/http/mapping/**"
-  - "com/example/sampletestingproject/SampleTestingProjectApplication.java"
-  - "com/example/sampletestingproject/domain/**"
-  - "com/example/sampletestingproject/gateway/http/json/**"
+  - "**/example/sampletestingproject/config/**"
+  - "**/example/sampletestingproject/gateway/http/mapping/**"
+  - "**/example/sampletestingproject/SampleTestingProjectApplication.java"
+  - "**/example/sampletestingproject/domain/**"
+  - "**/example/sampletestingproject/gateway/http/json/**"

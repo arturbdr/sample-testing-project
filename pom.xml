@@ -22,15 +22,16 @@
   <properties>
     <fixture-factory.version>3.1.0</fixture-factory.version>
     <fongo.version>2.1.0</fongo.version>
-    <gmavenplus-plugin.version>1.6</gmavenplus-plugin.version>
+    <gmavenplus-plugin.version>1.6.2</gmavenplus-plugin.version>
     <jacoco-maven-plugin.version>0.8.3</jacoco-maven-plugin.version>
     <java.version>1.8</java.version>
     <pitest-maven.mutationThreshold>75</pitest-maven.mutationThreshold>
-    <pitest-maven.version>1.4.0</pitest-maven.version>
+    <pitest-maven.version>1.4.6</pitest-maven.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <spotbugs-annotations.version>3.1.3</spotbugs-annotations.version>
-    <springfox-swagger2.version>2.7.0</springfox-swagger2.version>
+    <spock-spring.version>1.3-groovy-2.5</spock-spring.version>
+    <spotbugs-annotations.version>3.1.12</spotbugs-annotations.version>
+    <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
 
     <!-- Sonar configuration  -->
     <sonar.coverage.exclusions>
@@ -52,7 +53,6 @@
     <sonar.sources>src/main/java</sonar.sources>
     <sonar.tests>src/test/groovy,src/test/java</sonar.tests>
 
-    <spock-spring.version>1.2-groovy-2.4</spock-spring.version>
   </properties>
 
   <dependencies>
@@ -117,13 +117,6 @@
       <artifactId>spock-spring</artifactId>
       <version>${spock-spring.version}</version>
       <scope>test</scope>
-    </dependency>
-    <!--Required dependency to execute spock tests-->
-    <!--The scope can NOT be test. It must be compile!-->
-    <dependency>
-      <groupId>org.codehaus.groovy</groupId>
-      <artifactId>groovy-all</artifactId>
-      <version>2.4.15</version>
     </dependency>
 
     <!--Required dependency to use templates for testing-->

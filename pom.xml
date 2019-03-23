@@ -236,6 +236,28 @@
         </configuration>
       </plugin>
 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <executions>
+          <!--
+              Ensures that both integration-test and verify goals of the Failsafe Maven
+              plugin are executed.
+          -->
+          <execution>
+            <id>integration-tests</id>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+            <configuration>
+              <!-- Sets the VM argument line used when integration tests are run. -->
+              <argLine>${failsafeArgLine}</argLine>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
       <!-- Mutation test plugin. Execute org.pitest:pitest-maven:mutationCoverage to use it -->
       <plugin>
         <groupId>org.pitest</groupId>

@@ -52,6 +52,7 @@
     <sonar.sources>src/main/java</sonar.sources>
     <sonar.tests>src/test/groovy,src/test/java</sonar.tests>
 
+    <spock-spring.version>1.2-groovy-2.4</spock-spring.version>
   </properties>
 
   <dependencies>
@@ -106,15 +107,23 @@
     <!--Required dependency for Spock tests-->
     <dependency>
       <groupId>org.spockframework</groupId>
-      <artifactId>spock-spring</artifactId>
+      <artifactId>spock-core</artifactId>
+      <version>${spock-spring.version}</version>
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.spockframework</groupId>
+      <artifactId>spock-spring</artifactId>
+      <version>${spock-spring.version}</version>
+      <scope>test</scope>
+    </dependency>
     <!--Required dependency to execute spock tests-->
     <!--The scope can NOT be test. It must be compile!-->
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-all</artifactId>
+      <version>2.4.15</version>
     </dependency>
 
     <!--Required dependency to use templates for testing-->
@@ -248,6 +257,14 @@
             <param>com.example.sampletestingproject.*</param>
           </targetTests>
         </configuration>
+      </plugin>
+
+      <!--Plugging to check if there are new versions of dependencies and plugins-->
+      <!--To run it: mvn versions:display-dependency-updates
+      or mvn versions:display-plugin-updates -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>

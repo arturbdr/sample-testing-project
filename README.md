@@ -53,6 +53,7 @@ This application should follow the rules:
 10. Always return one ResponseEntity wrapping the response object (json/data contract) along with the correct status code (200, 201, 404, 500 etc)
 11. Must define the consumed and produced data accepted (produces/consumes annotations)
 12. Depending on the data volume, work with pagination
+13. Depending on the business, it might be also need Integration Testing
 
 #### Usecase responsibilities:
 1. May log (beware for sensitive data) the incoming payload
@@ -65,7 +66,11 @@ This application should follow the rules:
 
 ##### Other hints and site references
 1. Always check the existence of a Controller Advice to handle possible exceptions thrown from the usecase or other layers of the code (the client should not never receive unpredicted exceptions)
-2. Always check the spring boot doc at: [Spring Boot 1.5.8 reference guide](https://docs.spring.io/spring-boot/docs/1.5.8.RELEASE/reference//htmlsingle)
+2. Always check the spring boot doc at: [Spring Boot 2.1.3 reference guide](https://docs.spring.io/spring-boot/docs/2.1.3.RELEASE/reference//htmlsingle)
 3. In case of legacy code, check this website with good refactoring strategies and practice exercises: [Refactoring](https://sourcemaking.com/refactoring)
-4. Reference site of "Uncle Bob - Robert Martin": [Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
+4. Reference sites of Clean Architecture (btw: Hexagonal Architecture is a very similar to Clean Architeture)
+    - Uncle Bob - Robert Martin: [Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
+    - Clean Architecture For The RestOf Us: [CLEAN ARCHITECTURE FOR THE REST OF US](https://pusher.com/tutorials/clean-architecture-introduction)
+    - GitHub Code Example: [GitHub Code Example](https://github.com/mattia-battiston/clean-architecture-example)
+    - Anther approach to use Clean Architecture: [GitHub Example](https://github.com/Createdd/Writing/blob/master/2018/articles/CleanA.md#code-example) 
 5. Testing Strategies in microservices: [Testing Strategies](https://martinfowler.com/articles/microservice-testing/) 

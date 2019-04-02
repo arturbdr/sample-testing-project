@@ -71,7 +71,7 @@ public class UserControllerTest {
     String responseBodyAsString = mvcResult.getResponse().getContentAsString();
     User userFromResponse = objectMapper.readValue(responseBodyAsString, User.class);
     assertEquals(userFromResponse, createdUser);
-    verify(createUser, times(2)).createUser(any());
+    verify(createUser, times(1)).createUser(any());
     verify(createUserJsonToUser, times(1)).convert(any());
     verify(userToCreatedUserJson, times(1)).convert(any());
   }

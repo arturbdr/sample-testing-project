@@ -24,6 +24,7 @@
         <fongo.version>2.1.0</fongo.version>
         <gmavenplus-plugin.version>1.6.2</gmavenplus-plugin.version>
         <jacoco-maven-plugin.version>0.8.3</jacoco-maven-plugin.version>
+        <jacoco.outputDirectory>${project.build.directory}/jacoco</jacoco.outputDirectory>
         <java.version>1.8</java.version>
         <pitest-maven.mutationThreshold>75</pitest-maven.mutationThreshold>
         <pitest-maven.version>1.4.6</pitest-maven.version>
@@ -167,17 +168,26 @@
 
                 <executions>
                     <execution>
+                        <id>pre-unit-test</id>
                         <phase>initialize</phase>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
+                        <configuration>
+                            <destFile>${jacoco.outputDirectory}/jacoco-ut.exec</destFile>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
                     </execution>
                     <execution>
-                        <id>report</id>
+                        <id>post-unit-test</id>
                         <phase>test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <dataFile>${jacoco.outputDirectory}/jacoco-ut.exec</dataFile>
+                            <outputDirectory>${jacoco.outputDirectory}/jacoco-ut</outputDirectory>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>jacoco-check</id>
@@ -186,6 +196,7 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
+                            <dataFile>${jacoco.outputDirectory}/jacoco-ut.exec</dataFile>
                             <rules>
                                 <rule>
                                     <element>CLASS</element>
@@ -232,6 +243,8 @@
                         <include>**/*Test.java</include>
                         <include>**/*Spec.java</include>
                     </includes>
+                    <!-- Sets the VM argument line used when unit tests are run. -->
+                    <argLine>${surefireArgLine}</argLine>
                 </configuration>
             </plugin>
 

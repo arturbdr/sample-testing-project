@@ -2,9 +2,9 @@ language: java
 
 install: true
 
-script: mvn clean test -B -V
+script: mvn clean verify -B -V
 
-jdk: oraclejdk8
+jdk: openjdk11
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

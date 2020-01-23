@@ -49,18 +49,18 @@ class CreateUserSpec extends Specification {
 
     }
 
-    def "Este teste realiza a validaçao se a idade for menor que 30 anos"(){
-        given: "Dado um usuario com idade invalida (idade menor que 30 anos"
+    def "Check if the age is less 30 throws exception"(){
+        given: "user with invalid age (below 30 years)"
         User userToBeCreated = User.builder()
                 .age(20)
                 .cpf("99999999")
                 .name("Esdras Faconi")
                 .build()
 
-        when: "Quando tentar criar um usuario"
+        when: "try to create an user"
         createUser.createUser(userToBeCreated)
 
-        then: "Entao deve lancar uma excecao"
+        then: "an Exception should be thrown"
         def exception = thrown(InvalidAgeException)
         exception.message == "The user age should be greater than 30"
     }
